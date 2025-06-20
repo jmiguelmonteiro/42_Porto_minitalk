@@ -6,7 +6,7 @@
 #    By: josemigu <josemigu@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/06 15:17:48 by josemigu          #+#    #+#              #
-#    Updated: 2025/06/20 18:08:10 by josemigu         ###   ########.fr        #
+#    Updated: 2025/06/20 18:24:43 by josemigu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,46 +46,45 @@ OBJS_SRV		= $(addprefix $(OBJ_PATH_SRV), $(OBJ_SRV))
 all: $(LIBFT) $(NAME_CLIENT) $(NAME_SERVER)
 
 $(OBJ_PATH_CLI)%.o: $(SRC_PATH_CLI)%.c
-	@$(CC) $(CFLAGS) -c $< -o $@ $(INC)
+	$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 
 $(OBJ_PATH_SRV)%.o: $(SRC_PATH_SRV)%.c
-	@$(CC) $(CFLAGS) -c $< -o $@ $(INC)
+	$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 
 $(OBJS_CLI): $(OBJ_PATH_CLI)
 
 $(OBJS_SRV): $(OBJ_PATH_SRV)
 
 $(OBJ_PATH_CLI):
-	@mkdir $(OBJ_PATH_CLI)
+	mkdir $(OBJ_PATH_CLI)
 
 $(OBJ_PATH_SRV):
-	@mkdir $(OBJ_PATH_SRV)
+	mkdir $(OBJ_PATH_SRV)
 
 $(LIBFT):
-	@echo "Making libft..."
-	@make -sC $(LIBFT_PATH)
+	make -sC $(LIBFT_PATH)
 
 $(NAME_CLIENT): $(OBJS_CLI)
 	@echo "Compiling minitalk client..."
-	@$(CC) $(CFLAGS) -o $(NAME_CLIENT) $(OBJS_CLI) $(LIBFT) $(INC)
+	$(CC) $(CFLAGS) -o $(NAME_CLIENT) $(OBJS_CLI) $(LIBFT) $(INC)
 	@echo "Client ready!!!"
 
 $(NAME_SERVER): $(OBJS_SRV)
 	@echo "Compiling minitalk server..."
-	@$(CC) $(CFLAGS) -o $(NAME_SERVER) $(OBJS_SRV) $(LIBFT) $(INC)
+	$(CC) $(CFLAGS) -o $(NAME_SERVER) $(OBJS_SRV) $(LIBFT) $(INC)
 	@echo "Server ready!!!"
 
 clean:
 	@echo "Removing .o object files..."
-	@rm -rf $(OBJ_PATH_CLI)
-	@rm -rf $(OBJ_PATH_SRV)
+	rm -rf $(OBJ_PATH_CLI)
+	rm -rf $(OBJ_PATH_SRV)
 	@make clean -C $(LIBFT_PATH)
 
 fclean: clean
-	@echo "Removing test..."
-	@rm -f $(NAME_CLIENT)
-	@rm -f $(NAME_SERVER)
-	@rm -f $(LIBFT_PATH)$(LIBFT_NAME)
+	@echo "Removing binaries..."
+	rm -f $(NAME_CLIENT)
+	rm -f $(NAME_SERVER)
+	rm -f $(LIBFT_PATH)$(LIBFT_NAME)
 
 re: fclean all
 

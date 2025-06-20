@@ -6,7 +6,7 @@
 /*   By: josemigu <josemigu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 18:05:03 by josemigu          #+#    #+#             */
-/*   Updated: 2025/06/20 18:09:53 by josemigu         ###   ########.fr       */
+/*   Updated: 2025/06/20 18:47:18 by josemigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,16 @@
 
 int	main(void)
 {
+	pid_t	pid;
+	struct sigaction sigact;
 	
+	pid = getpid();
+	ft_printf("%d\n", pid);
+	
+	while (true)
+	{
+		
+	}
+
+	return (EXIT_SUCCESS);
 }
