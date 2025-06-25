@@ -6,7 +6,7 @@
 /*   By: josemigu <josemigu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 18:04:39 by josemigu          #+#    #+#             */
-/*   Updated: 2025/06/25 16:01:54 by josemigu         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:10:50 by josemigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void send_char(pid_t server_pid, unsigned char c)
 	i = 8;
 	while (i--)
 	{
-		printf("client, send_char, i, bool: %d %d\n", i, (c >> i) & 1);
+//		printf("client, send_char, i, bool: %d %d\n", i, (c >> i) & 1);
 		if ((c >> i) & 1)
 			kill(server_pid, SIGUSR2);
 		else

@@ -6,7 +6,7 @@
 /*   By: josemigu <josemigu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 18:05:03 by josemigu          #+#    #+#             */
-/*   Updated: 2025/06/25 15:58:13 by josemigu         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:07:53 by josemigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void signal_handler_server(int sig, siginfo_t *info, void *ucontext)
 	if (sig == SIGUSR2)
 		c |= 1;
 	i++;
+	kill(client_pid, SIGUSR1);
 	if (i == 8)
 	{
 		i = 0;
@@ -41,10 +42,7 @@ void signal_handler_server(int sig, siginfo_t *info, void *ucontext)
 			ft_putchar_fd(c, 1);
 		c = 0;
 	} else
-	{
 		c = c << 1;
-		kill(client_pid, SIGUSR1);
-	}
 }
 
 int	main(void)
