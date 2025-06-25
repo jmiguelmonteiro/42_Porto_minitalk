@@ -6,24 +6,26 @@
 /*   By: josemigu <josemigu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 18:04:39 by josemigu          #+#    #+#             */
-/*   Updated: 2025/06/25 13:23:48 by josemigu         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:01:54 by josemigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-static void send_char(pid_t server_pid, char *c)
+static void send_char(pid_t server_pid, unsigned char c)
 {
-	int				i;
+	int	i;
 
-	i = 0;
-	while (i < 8)
+	printf("client, send_char, c: %c\n", c);
+	i = 8;
+	while (i--)
 	{
-		if ((*c >> i) && 1)
+		printf("client, send_char, i, bool: %d %d\n", i, (c >> i) & 1);
+		if ((c >> i) & 1)
 			kill(server_pid, SIGUSR2);
 		else
 			kill(server_pid, SIGUSR1);
-		i++;
+		pause();
 	}
 }
 
@@ -31,10 +33,10 @@ static void send_string(pid_t server_pid, char *str)
 {
 	while (*str)
 	{
-		send_char(server_pid, str);
+		send_char(server_pid, str[0]);
 		str++;
 	}
-	send_char(server_pid, "\0");
+	send_char(server_pid, '\0');
 }
 
 void signal_handler_client(int sig, siginfo_t *info, void *ucontext)
