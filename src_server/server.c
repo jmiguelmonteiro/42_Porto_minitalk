@@ -54,9 +54,12 @@ int	main(void)
 	ft_bzero(&sa, sizeof(sa));
 	sa.sa_sigaction = signal_handler_server;
 	sa.sa_flags = SA_RESTART | SA_SIGINFO;
-	sigaction(SIGUSR1, &sa, NULL);
-	sigaction(SIGUSR2, &sa, NULL);
-	ft_printf("%d\n", pid);
+	if ((sigaction(SIGUSR1, &sa, NULL) == -1) || (sigaction(SIGUSR2, &sa, NULL) == -1))
+	{
+		ft_printf("Error changing signals action.\n");
+		return (EXIT_FAILURE);
+	}
+	ft_printf("Server PID: %d\n", pid);
 	while (true)
 		pause();
 	return (EXIT_SUCCESS);
