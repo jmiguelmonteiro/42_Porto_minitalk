@@ -6,13 +6,13 @@
 #    By: josemigu <josemigu@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/06 15:17:48 by josemigu          #+#    #+#              #
-#    Updated: 2025/06/20 18:24:43 by josemigu         ###   ########.fr        #
+#    Updated: 2025/06/27 19:09:34 by josemigu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #Program name
-NAME_CLIENT	= client
-NAME_SERVER	= server
+CLIENT	= client
+SERVER	= server
 
 # Compiler
 CC				= cc
@@ -32,8 +32,6 @@ SRC_PATH_CLI	=	src_client/
 SRC_PATH_SRV	=	src_server/
 SRC_CLI			=	client.c
 SRC_SRV			=	server.c
-SRCS_CLI		=	$(addprefix $(SRC_PATH_CLI), $(SRC_CLIENT))
-SRCS_SRV		=	$(addprefix $(SRC_PATH_SRV), $(SRC_SERVER))
 
 # Objects
 OBJ_PATH_CLI	= obj_client/
@@ -43,12 +41,12 @@ OBJ_SRV			= $(SRC_SRV:.c=.o)
 OBJS_CLI		= $(addprefix $(OBJ_PATH_CLI), $(OBJ_CLI))
 OBJS_SRV		= $(addprefix $(OBJ_PATH_SRV), $(OBJ_SRV))
 
-all: $(LIBFT) $(NAME_CLIENT) $(NAME_SERVER)
+all: $(LIBFT) $(CLIENT) $(SERVER)
 
-$(OBJ_PATH_CLI)%.o: $(SRC_PATH_CLI)%.c
+$(OBJ_PATH_CLI)%.o: $(SRC_PATH_CLI)%.c | $(OBJ_PATH_CLI)
 	$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 
-$(OBJ_PATH_SRV)%.o: $(SRC_PATH_SRV)%.c
+$(OBJ_PATH_SRV)%.o: $(SRC_PATH_SRV)%.c | $(OBJ_PATH_SRV)
 	$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 
 $(OBJS_CLI): $(OBJ_PATH_CLI)
@@ -64,15 +62,15 @@ $(OBJ_PATH_SRV):
 $(LIBFT):
 	make -sC $(LIBFT_PATH)
 
-$(NAME_CLIENT): $(OBJS_CLI)
+$(CLIENT): $(OBJS_CLI)
 	@echo "Compiling minitalk client..."
-	$(CC) $(CFLAGS) -o $(NAME_CLIENT) $(OBJS_CLI) $(LIBFT) $(INC)
-	@echo "Client ready!!!"
+	$(CC) $(CFLAGS) -o $(CLIENT) $(OBJS_CLI) $(LIBFT) $(INC)
+	@echo "Client compiled!!!"
 
-$(NAME_SERVER): $(OBJS_SRV)
+$(SERVER): $(OBJS_SRV)
 	@echo "Compiling minitalk server..."
-	$(CC) $(CFLAGS) -o $(NAME_SERVER) $(OBJS_SRV) $(LIBFT) $(INC)
-	@echo "Server ready!!!"
+	$(CC) $(CFLAGS) -o $(SERVER) $(OBJS_SRV) $(LIBFT) $(INC)
+	@echo "Server compiled!!!"
 
 clean:
 	@echo "Removing .o object files..."
@@ -82,8 +80,8 @@ clean:
 
 fclean: clean
 	@echo "Removing binaries..."
-	rm -f $(NAME_CLIENT)
-	rm -f $(NAME_SERVER)
+	rm -f $(CLIENT)
+	rm -f $(SERVER)
 	rm -f $(LIBFT_PATH)$(LIBFT_NAME)
 
 re: fclean all
