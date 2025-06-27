@@ -6,7 +6,7 @@
 /*   By: josemigu <josemigu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 15:25:06 by josemigu          #+#    #+#             */
-/*   Updated: 2025/06/25 12:29:19 by josemigu         ###   ########.fr       */
+/*   Updated: 2025/06/27 19:13:41 by josemigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,5 @@
 # include <unistd.h>
 # include <signal.h>
 # include <stdlib.h>
-# include <stdio.h>
 
 #endif

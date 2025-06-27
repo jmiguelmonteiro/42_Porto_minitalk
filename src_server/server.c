@@ -6,13 +6,37 @@
 /*   By: josemigu <josemigu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 18:05:03 by josemigu          #+#    #+#             */
-/*   Updated: 2025/06/27 18:39:10 by josemigu         ###   ########.fr       */
+/*   Updated: 2025/06/27 19:24:54 by josemigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-static bool check_client_pid(pid_t *client_pid, siginfo_t *info)
+/** @brief Concatenates s2 in s1 and frees s1
+ *  @param s1 - string
+ *  @param s2 - string
+*/
+static char	*ft_strjoin_free(char *s1, char const *s2)
+{
+	char	*result;
+	size_t	len_s1;
+	size_t	len_s2;
+	size_t	len_result;
+
+	len_s1 = ft_strlen(s1);
+	len_s2 = ft_strlen(s2);
+	len_result = len_s1 + len_s2;
+	result = malloc((len_result + 1) * sizeof (*result));
+	if (!result)
+		return (NULL);
+	ft_memmove(result, s1, len_s1);
+	ft_memmove(result + len_s1, s2, len_s2);
+	result[len_result] = '\0';
+	free(s1);
+	return (result);
+}
+
+static bool	check_client_pid(pid_t *client_pid, siginfo_t *info)
 {
 	if (*client_pid == 0)
 		*client_pid = info->si_pid;
@@ -42,7 +66,6 @@ static void	signal_handler_server(int sig, siginfo_t *info, void *ucontext)
 	static char				c = 0;
 	static pid_t			client_pid = 0;
 	static char				*message;
-	char					*temp;
 
 	(void)ucontext;
 	if (!check_client_pid(&client_pid, info))
@@ -51,19 +74,14 @@ static void	signal_handler_server(int sig, siginfo_t *info, void *ucontext)
 		message = ft_strdup("");
 	if (sig == SIGUSR2)
 		c |= 1;
-	i++;
 	kill(client_pid, SIGUSR1);
-	if (i == 8)
+	if (++i == 8)
 	{
 		i = 0;
 		if (c == END_TRANSMISSION)
 			acknowledge_received_message(&client_pid, &message);
 		else
-		{
-			temp = message;
-			message = ft_strjoin(message, &c);
-			free(temp);
-		}
+			message = ft_strjoin_free(message, &c);
 		c = 0;
 	}
 	else
