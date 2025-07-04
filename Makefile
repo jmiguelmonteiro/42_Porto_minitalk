@@ -6,7 +6,7 @@
 #    By: josemigu <josemigu@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/06 15:17:48 by josemigu          #+#    #+#              #
-#    Updated: 2025/07/04 12:35:48 by josemigu         ###   ########.fr        #
+#    Updated: 2025/07/04 12:43:24 by josemigu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,8 +50,6 @@ OBJS_CLI_B		= $(addprefix $(OBJ_PATH_CLI), $(OBJ_CLI_B))
 OBJS_SRV_B		= $(addprefix $(OBJ_PATH_SRV), $(OBJ_SRV_B))
 
 all: $(LIBFT) $(CLIENT) $(SERVER)
-
-bonus: $(LIBFT) $(CLIENT_B) $(SERVER_B)
 
 $(OBJ_PATH_CLI)%.o: $(SRC_PATH_CLI)%.c | $(OBJ_PATH_CLI)
 	$(CC) $(CFLAGS) -c $< -o $@ $(INC)
@@ -109,5 +107,7 @@ fclean: clean
 	rm -f $(LIBFT_PATH)$(LIBFT_NAME)
 
 re: fclean all
+
+bonus: $(LIBFT) $(CLIENT_B) $(SERVER_B)
 
 .PHONY: all re clean fclean bonus
