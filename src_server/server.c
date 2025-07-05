@@ -6,13 +6,13 @@
 /*   By: josemigu <josemigu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 18:05:03 by josemigu          #+#    #+#             */
-/*   Updated: 2025/06/27 19:24:54 by josemigu         ###   ########.fr       */
+/*   Updated: 2025/07/05 10:59:05 by josemigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-/** @brief Concatenates s2 in s1 and frees s1
+/** @brief Concatenates s1 and s2 and frees s1
  *  @param s1 - string
  *  @param s2 - string
 */
