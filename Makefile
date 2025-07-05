@@ -6,7 +6,7 @@
 #    By: josemigu <josemigu@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/06 15:17:48 by josemigu          #+#    #+#              #
-#    Updated: 2025/07/05 11:01:28 by josemigu         ###   ########.fr        #
+#    Updated: 2025/07/05 11:06:42 by josemigu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,12 +65,12 @@ $(LIBFT):
 $(CLIENT): $(OBJS_CLI)
 	@echo "Compiling minitalk client..."
 	$(CC) $(CFLAGS) -o $(CLIENT) $(OBJS_CLI) $(LIBFT) $(INC)
-	@echo "Client compiled!!!"
+	@echo "✅ Client compiled!!!"
 
 $(SERVER): $(OBJS_SRV)
 	@echo "Compiling minitalk server..."
 	$(CC) $(CFLAGS) -o $(SERVER) $(OBJS_SRV) $(LIBFT) $(INC)
-	@echo "Server compiled!!!"
+	@echo "✅ Server compiled!!!"
 
 clean:
 	@echo "Removing .o object files..."
