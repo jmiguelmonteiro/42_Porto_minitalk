@@ -6,7 +6,7 @@
 /*   By: josemigu <josemigu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 18:05:03 by josemigu          #+#    #+#             */
-/*   Updated: 2025/07/05 10:59:05 by josemigu         ###   ########.fr       */
+/*   Updated: 2025/07/09 12:06:40 by josemigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ static char	*ft_strjoin_free(char *s1, char const *s2)
 	return (result);
 }
 
+static void	send_signal(pid_t pid, int sig)
+{
+	if (kill(pid, sig) == -1)
+		exit(ft_printf("Server: Error sending signal.\n"));
+}
+
 static bool	check_client_pid(pid_t *client_pid, siginfo_t *info)
 {
 	if (*client_pid == 0)
@@ -51,12 +57,10 @@ static void	acknowledge_received_message(pid_t *client_pid, char **message)
 	write(1, *message, ft_strlen(*message));
 	free(*message);
 	*message = NULL;
+	send_signal(*client_pid, SIGUSR1);
 	ft_printf("\n");
 	ft_printf("Server: Acknowledge received message.\n");
-	if (kill(*client_pid, SIGUSR2) == -1)
-	{
-		exit (ft_printf("Server: Error sending signal.\n"));
-	}
+	send_signal(*client_pid, SIGUSR2);
 	*client_pid = 0;
 }
 
@@ -74,18 +78,23 @@ static void	signal_handler_server(int sig, siginfo_t *info, void *ucontext)
 		message = ft_strdup("");
 	if (sig == SIGUSR2)
 		c |= 1;
-	kill(client_pid, SIGUSR1);
 	if (++i == 8)
 	{
 		i = 0;
 		if (c == END_TRANSMISSION)
 			acknowledge_received_message(&client_pid, &message);
 		else
+		{
 			message = ft_strjoin_free(message, &c);
+			send_signal(client_pid, SIGUSR1);
+		}
 		c = 0;
 	}
 	else
+	{
 		c = c << 1;
+		send_signal(client_pid, SIGUSR1);
+	}
 }
 
 int	main(void)
