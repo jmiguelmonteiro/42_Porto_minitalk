@@ -6,7 +6,7 @@
 #    By: josemigu <josemigu@student.42porto.com>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/06 15:17:48 by josemigu          #+#    #+#              #
-#    Updated: 2025/07/05 11:06:42 by josemigu         ###   ########.fr        #
+#    Updated: 2025/07/09 14:24:41 by josemigu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ INC			=	-I ./includes/ \
 SRC_PATH_CLI	=	src_client/
 SRC_PATH_SRV	=	src_server/
 SRC_CLI			=	client.c
-SRC_SRV			=	server.c
+SRC_SRV			=	server.c utils.c
 
 # Objects
 OBJ_PATH_CLI	= obj_client/
@@ -48,10 +48,6 @@ $(OBJ_PATH_CLI)%.o: $(SRC_PATH_CLI)%.c | $(OBJ_PATH_CLI)
 
 $(OBJ_PATH_SRV)%.o: $(SRC_PATH_SRV)%.c | $(OBJ_PATH_SRV)
 	$(CC) $(CFLAGS) -c $< -o $@ $(INC)
-
-$(OBJS_CLI): $(OBJ_PATH_CLI)
-
-$(OBJS_SRV): $(OBJ_PATH_SRV)
 
 $(OBJ_PATH_CLI):
 	mkdir $(OBJ_PATH_CLI)

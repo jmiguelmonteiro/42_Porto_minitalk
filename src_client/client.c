@@ -6,7 +6,7 @@
 /*   By: josemigu <josemigu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 18:04:39 by josemigu          #+#    #+#             */
-/*   Updated: 2025/06/27 16:32:13 by josemigu         ###   ########.fr       */
+/*   Updated: 2025/07/09 12:47:37 by josemigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static void	send_string(pid_t server_pid, char *str)
 	while (str[i])
 		send_char(server_pid, str[i++]);
 	send_char(server_pid, '\0');
+	ft_printf("Client: Message sent.\n");
 	pause();
 }
 

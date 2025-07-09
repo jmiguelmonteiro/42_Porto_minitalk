@@ -6,7 +6,7 @@
 /*   By: josemigu <josemigu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/06 15:25:06 by josemigu          #+#    #+#             */
-/*   Updated: 2025/06/27 19:13:41 by josemigu         ###   ########.fr       */
+/*   Updated: 2025/07/09 12:56:14 by josemigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,7 @@
 # include <unistd.h>
 # include <signal.h>
 # include <stdlib.h>
+
+bool	check_client_pid(pid_t *client_pid, siginfo_t *info);
 
 #endif

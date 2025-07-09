@@ -6,50 +6,16 @@
 /*   By: josemigu <josemigu@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 18:05:03 by josemigu          #+#    #+#             */
-/*   Updated: 2025/07/09 12:06:40 by josemigu         ###   ########.fr       */
+/*   Updated: 2025/07/09 12:36:16 by josemigu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-/** @brief Concatenates s1 and s2 and frees s1
- *  @param s1 - string
- *  @param s2 - string
-*/
-static char	*ft_strjoin_free(char *s1, char const *s2)
-{
-	char	*result;
-	size_t	len_s1;
-	size_t	len_s2;
-	size_t	len_result;
-
-	len_s1 = ft_strlen(s1);
-	len_s2 = ft_strlen(s2);
-	len_result = len_s1 + len_s2;
-	result = malloc((len_result + 1) * sizeof (*result));
-	if (!result)
-		return (NULL);
-	ft_memmove(result, s1, len_s1);
-	ft_memmove(result + len_s1, s2, len_s2);
-	result[len_result] = '\0';
-	free(s1);
-	return (result);
-}
-
 static void	send_signal(pid_t pid, int sig)
 {
 	if (kill(pid, sig) == -1)
 		exit(ft_printf("Server: Error sending signal.\n"));
-}
-
-static bool	check_client_pid(pid_t *client_pid, siginfo_t *info)
-{
-	if (*client_pid == 0)
-		*client_pid = info->si_pid;
-	else
-		if (*client_pid != info->si_pid)
-			return (false);
-	return (true);
 }
 
 static void	acknowledge_received_message(pid_t *client_pid, char **message)
